@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Stranded - The Adventure game</title>
+	<script type="text/javascript">
+		var debugMode = true
+
+		function random(percentage) {
+			if (percentage == undefined) {
+				throw new Error('random(): Parameter is undefined');
+			}
+			var x = Math.floor((Math.random() * 100) + 1); 
+
+			if (debugMode == true) {
+				console.log('Random: ' + x + ' (' + percentage + ')');
+			}
+			if (percentage <= x) {
+				return false;
+			}else {
+				return true;
+			}
+		}
+		function changeBackground(background) {
+			document.body.style.backgroundImage = 'url(' + background + ')';
+		}
+		function clean() {
+			var toClean = document.getElementById('container');
+			while (toClean.lastChild) {
+				toClean.removeChild(toClean.lastChild);
+			}
+		}
+		function subtitels(text) {
+			if (debugMode == true) {
+				console.log('subtitels(): ' + text);
+			}
+			if (text == '/clean') {
+				var myElem = document.getElementById('subtitels');
+				if (myElem != null) {
+					var toClean = document.getElementById('container');
+					var child = myElem
+					toClean.removeChild(document.getElementById('subtitels'));
+				};
+				return;
+			}
+			if (text == undefined) {
+				throw new Error('subtitels(): Parameter is undefined');
+			}
+			var myElem = document.getElementById('subtitels');
+			if (myElem != null) {
+				var toClean = document.getElementById('container');
+				var child = myElem
+				toClean.removeChild(document.getElementById('subtitels'));
+			};
+			var para = document.createElement('p');
+			var t = document.createTextNode(text);
+			var att = document.createAttribute('id');
+			att.value = 'subtitels'; 
+			para.setAttributeNode(att); 
+			para.appendChild(t);
+			document.getElementById('container').appendChild(para);
+		}
+		function choos(option1, option2) {
+			if (debugMode == true) {
+				console.log('choos(): 1:' + option1 + ', 2:' + option2);
+			}
+			if (option1 == '/clean') {
+				var myElem = document.getElementById('choos');
+				if (myElem != null) {
+					var toClean = document.getElementById('container');
+					var child = myElem
+					toClean.removeChild(document.getElementById('choos'));
+				};
+				return;
+			}
+			if (option1 == undefined || option2 == undefined) {
+				throw new Error('choos(): Parameter(s) is undefined');
+			}
+			var myElem = document.getElementById('choos');
+			if (myElem != null) {
+				var toClean = document.getElementById('container');
+				var child = myElem
+				toClean.removeChild(document.getElementById('choos'));
+			};
+			var para = document.createElement('ul');
+			var t = document.createTextNode('');
+			var att = document.createAttribute('id');
+			att.value = 'choos'; 
+			para.setAttributeNode(att); 
+			para.appendChild(t);
+			document.getElementById('container').appendChild(para);
+
+			var newItem1 = document.createElement('li');
+			var textnode1 = document.createTextNode(option1);
+			var att = document.createAttribute('id');
+			att.value = 'option1'; 
+			newItem1.setAttributeNode(att); 
+			newItem1.appendChild(textnode1);
+
+			var newItem2 = document.createElement('li');
+			var textnode2 = document.createTextNode(option2);
+			var att = document.createAttribute('id');
+			att.value = 'option2'; 
+			newItem2.setAttributeNode(att); 
+			newItem2.appendChild(textnode2);
+
+			var list = document.getElementById('choos');
+			var att = document.createAttribute('id');
+			list.insertBefore(newItem2, list.childNodes[0]);
+			list.insertBefore(newItem1, list.childNodes[0]);
+
+			document.getElementById("option1").onclick = function() {// ONCLICK opt1...};
+			document.getElementById("option2").onclick = function() {// ONCLICK opt2...};
+		}
+	</script>
+	<script type="text/javascript">
+		function level(levelId) {
+			clean();
+			if (levelId == 0) {
+				changeBackground('img/plane_crash.jpg');
+				subtitels('You was in your private jet, and form the one to the other moment the plane crashed on the sea. You climb in a lifeboat and sails to a island what you see.');
+				setTimeout(function(){ changeBackground('img/unknow_island.jpg'); }, 5000);
+				setTimeout(function(){ subtitels('You stranded on a unknown island. You see something on the sea, but you cant clearly see what it is.'); }, 5000);
+				setTimeout(function(){ subtitels('/clean'); }, 9000);
+				
+				setTimeout(function(){ choos('Explore the island', 'Explore the sea'); }, 9000);
+			}
+			else if (levelId == 1) {
+				
+			}
+		}</script>
+	<script type="text/javascript">
+		window.onload = function() {
+			document.getElementById("start").onclick = function() {level(0)};
+		}
+	</script>
+	<style type="text/css">
+		body { 
+			background: url(img/welcome-screen.png);
+		}
+		h1 {
+			position: absolute;
+			top: 10%;
+			left: 50%;
+			transform: translateX(-50%);
+			font-size: 50px;
+			border: 1px;
+			border-style: solid;
+			padding: 20px 40px;
+			background: rgba(0,0,0,0.05);
+		}
+		.button {
+			position: absolute;
+			bottom: 20%;
+			left: 50%;
+			cursor: pointer;
+			transform: translateX(-50%);
+			font-size: 50px;
+			border: 1px;
+			border-style: solid;
+			padding: 20px 40px;
+			background: rgba(0,0,0,0.1);
+		}
+		p#subtitels {
+			position: absolute;
+			bottom: 2%;
+			left: 50%;
+			transform: translateX(-50%);
+			font-size: 20px;
+			border: 1px;
+			border-style: solid;
+			padding: 5px 10px;
+			background: rgba(0,0,0,0.1);
+			color: #fff;
+			border-color: #000;
+		}
+		ul#choos {
+			position: absolute;
+			bottom: 2%;
+			left: 50%;
+			transform: translateX(-50%);
+			font-size: 20px;
+			border: 1px;
+			border-style: solid;
+			padding: 5px 10px;
+			background: rgba(0,0,0,0.1);
+			color: #fff;
+			border-color: #000;
+		}</style>
+</head>
+<body>
+	<div id="container">
+		<h1>Stranded</h1>
+		<div id="start" class="button">Start</div>
+	</div>
+</body>
+</html>
