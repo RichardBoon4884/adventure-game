@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Stranded - The Adventure game</title>
+	<meta charset="UTF-8"> 
 	<script type="text/javascript">
 		var debugMode = true
 
@@ -108,8 +109,23 @@
 			list.insertBefore(newItem2, list.childNodes[0]);
 			list.insertBefore(newItem1, list.childNodes[0]);
 
-			document.getElementById("option1").onclick = function() {/* ONCLICK opt1... */};
-		document.getElementById("option2").onclick = function() {/* ONCLICK opt2... */};
+			document.getElementById("option1").onclick = function() {
+				if (debugMode == true) {
+					console.log('choos(): option1');
+				}
+			};
+			document.getElementById("option2").onclick = function() {
+				if (debugMode == true) {
+					console.log('choos(): option1');
+				}
+			};
+		}
+		function dead(reason) {
+			clean();
+			changeBackground('img/game-over.png');
+			subtitels(reason);
+			// <div id="start" class="button">Try again?</div>
+			// <h2>R.I.P.</h2>
 		}
 	</script>
 	<script type="text/javascript">
@@ -119,14 +135,96 @@
 				changeBackground('img/plane_crash.jpg');
 				subtitels('You was in your private jet, and form the one to the other moment the plane crashed on the sea. You climb in a lifeboat and sails to a island what you see.');
 				setTimeout(function(){ changeBackground('img/unknow_island.jpg'); }, 5000);
-				setTimeout(function(){ subtitels('You stranded on a unknown island. You see something on the sea, but you cant clearly see what it is.'); }, 5000);
+				setTimeout(function(){ subtitels('You stranded on a unknown island. You have two options:'); }, 5000);
 				setTimeout(function(){ subtitels('/clean'); }, 9000);
 				
 				setTimeout(function(){ choos('Explore the island', 'Explore the sea'); }, 9000);
+				setTimeout(function(){ 
+					document.getElementById("option1").onclick = function() {
+						level(1);
+					};
+					document.getElementById("option2").onclick = function() {
+						level(2);
+					};
+				}, 9000);
+			} else if (levelId == 1) {
+				changeBackground('img/island.png');
+				subtitels('You are exploring the island, it\'s look like a small island.')
+				setTimeout(function(){ 
+					if (random(70) == true) {
+						level(3)
+					} else {
+						dead('You was eaten by wild animal.')
+					}
+				}, 4000);
+			} else if (levelId == 2) {
+				 if (random(20) == true) {
+				 	changeBackground('img/sea.jpg');
+					subtitels('You see something on the sea, but you can\'t clearly see what it is. Choose:');
+					setTimeout(function(){ subtitels('/clean'); choos('Sail to it', 'Head back to the island'); }, 2500);
+					setTimeout(function(){ 
+						document.getElementById("option1").onclick = function() {
+							if (random(5) == true) {
+								level(4);
+							} else {
+								dead('It was imagination, you see nothing anymore and you\'re lost on the open sea')
+							}
+						};
+						document.getElementById("option2").onclick = function() {
+							level(1);
+						};
+					}, 2500);
+				 } else {
+				 	dead('A wild sea animal eaten you.')
+				 };
+			} else if (levelId == 3) {
+				changeBackground('img/pirates.jpg');
+				subtitels('You see some pirates and run for your life.');
+				setTimeout(function(){ subtitels('You escaped from the pirates and hiding you\'r self in a house') }, 2500)
+				setTimeout(function(){ changeBackground('img/world.jpg'); subtitels('In that house you meets a local villager. He can help you escaping from the island') }, 7000)
+				setTimeout(function(){ subtitels('He tell his plan how you can escape the island and where you can be rescued.') }, 11000)
+				setTimeout(function(){ subtitels('The plan sounds good. He offers to help you with. But you don\'t really trust him.') }, 16000)
+				setTimeout(function(){ subtitels('/clean'); choos('Accept the offer', 'Do it alone'); }, 20500)
+				setTimeout(function(){ 
+					document.getElementById("option1").onclick = function() {
+						level(5);
+					};
+					document.getElementById("option2").onclick = function() {
+						level(6);
+					};
+				}, 20500);
+			} else if (levelId == 4) {
+				changeBackground('img/ship.jpg');
+				subtitels('It was a cargo ship! The ship spotted you and has send a lifeboat to you. You\'re safe.');
+			} else if (levelId == 5) {
+				if (random(60) == true) {
+					changeBackground('img/sea.jpg');
+					subtitels('Next day you wake up and you quickly brief the plan with the villager. When the pirates take turns, there is a gape to escape. With your lifeboat sail for exact two hours and wait then for a chopper flying over.');
+					setTimeout(function(){ subtitels('As plan, the pirates take turns, and a gape is created, quickly you jump in you\'r lifeboat and sail for a few hours. And he was right. A chopper was flying over and quickly you fire a flare.') }, 10000)
+					setTimeout(function(){ subtitels('He spotted you and informed the coast guard, minutes later the coast guard arrived and you are safe!') }, 20000)
+				} else {
+					changeBackground('img/sea.jpg');
+					subtitels('Next day you wake up and you quickly brief the plan with the villager. When the pirates take turns, there is a gape to escape. With your lifeboat sail for a few hours and wait for a chopper flying over.');
+					setTimeout(function(){ dead('He betrayed you and you are captured, and executed because you was trying to escape.') }, 10000)
+				};
+			} else if (levelId == 6) {
+				if (random(40) == true) {
+					changeBackground('img/sea.jpg');
+					subtitels('Next day you prepare you\'r self. You go to the spot and wait.');
+					setTimeout(function(){ subtitels('The pirates take turns, and a gape is created, quickly you jump in you\'r lifeboat and sail for a few hours. And he was right. A chopper was flying over and quickly you fire a flare.') }, 7000)
+					setTimeout(function(){ subtitels('He spotted you and informed the coast guard, minutes later the coast guard arrived and you are safe!') }, 16000)
+				} else {
+					changeBackground('img/sea.jpg');
+					subtitels('Next day you prepare you\'r self. You go to the spot and wait.');
+					setTimeout(function(){ dead('Because you was alone, you din\'t know exactly when you can escape the island. You are captured, and executed because you was trying to escape.') }, 10000)
+				};
+			} else {
+				throw new Error('level(): Parameter is not valid');
 			}
-			else if (levelId == 1) {
-				
-			}
+		}
+		function startGame(debug) {
+			if (debug == true) {debugMode = true};
+			level(0);
 		}</script>
 	<script type="text/javascript">
 		window.onload = function() {
@@ -136,8 +234,12 @@
 	<style type="text/css">
 		body { 
 			background: url(img/welcome-screen.png);
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			background-position: center; 
+			background-size: cover;
 		}
-		h1 {
+		h1, h2 {
 			position: absolute;
 			top: 10%;
 			left: 50%;
