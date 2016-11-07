@@ -4,7 +4,7 @@
 	<title>Stranded - The Adventure game</title>
 	<meta charset="UTF-8"> 
 	<script type="text/javascript">
-		var debugMode = true
+		var debugMode = false
 
 		function random(percentage) {
 			if (percentage == undefined) {
@@ -13,7 +13,13 @@
 			var x = Math.floor((Math.random() * 100) + 1); 
 
 			if (debugMode == true) {
-				console.log('Random: ' + x + ' (' + percentage + ')');
+				if (percentage <= x) {
+					console.log('random(): ' + x + '% (' + percentage + '%), false');
+					return false;
+				}else {
+					console.log('random(): ' + x + '% (' + percentage + '%), true');
+					return true;
+				}
 			}
 			if (percentage <= x) {
 				return false;
@@ -105,7 +111,6 @@
 			newItem2.appendChild(textnode2);
 
 			var list = document.getElementById('choos');
-			var att = document.createAttribute('id');
 			list.insertBefore(newItem2, list.childNodes[0]);
 			list.insertBefore(newItem1, list.childNodes[0]);
 
@@ -124,8 +129,22 @@
 			clean();
 			changeBackground('img/game-over.png');
 			subtitels(reason);
-			// <div id="start" class="button">Try again?</div>
-			// <h2>R.I.P.</h2>
+
+			var newItem1 = document.createElement('div');
+			var textnode1 = document.createTextNode('Try again?');
+			var att1 = document.createAttribute('id');
+			att1.value = 'start'; 
+			var att2 = document.createAttribute('class');
+			att2.value = 'buttonDead'; 
+
+			newItem1.setAttributeNode(att1); 
+			newItem1.setAttributeNode(att2);
+			newItem1.appendChild(textnode1);
+
+			var list = document.getElementById('container');
+			list.insertBefore(newItem1, list.childNodes[0]);
+			
+			document.getElementById("start").onclick = function() {startGame()};
 		}
 	</script>
 	<script type="text/javascript">
@@ -228,7 +247,7 @@
 		}</script>
 	<script type="text/javascript">
 		window.onload = function() {
-			document.getElementById("start").onclick = function() {level(0)};
+			document.getElementById("start").onclick = function() {startGame()};
 		}
 	</script>
 	<style type="text/css">
@@ -262,6 +281,19 @@
 			border-style: solid;
 			padding: 20px 40px;
 			background: rgba(0,0,0,0.1);
+		}
+		.buttonDead {
+			position: absolute;
+			top: 5%;
+			left: 50%;
+			cursor: pointer;
+			transform: translateX(-50%);
+			font-size: 50px;
+			border: 1px;
+			border-style: solid;
+			padding: 20px 40px;
+			background: rgba(0,0,0,0.1);
+			color: #FFF;
 		}
 		p#subtitels {
 			position: absolute;
