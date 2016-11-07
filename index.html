@@ -138,6 +138,19 @@
 
 			document.getElementById("start").onclick = function() {startGame()};
 		}
+		function win() {
+			var newItem1 = document.createElement('div');
+			var textnode1 = document.createTextNode('Try again?');
+			newItem1.setAttribute('id','start'); 
+			newItem1.setAttribute('class','buttonTop');
+
+			newItem1.appendChild(textnode1);
+
+			var list = document.getElementById('container');
+			list.insertBefore(newItem1, list.childNodes[0]);
+
+			document.getElementById("start").onclick = function() {startGame()};
+		}
 	</script>
 	<script type="text/javascript">
 		function level(levelId) {
@@ -210,12 +223,13 @@
 			} else if (levelId == 4) {
 				changeBackground('img/ship.jpg');
 				subtitels('It was a cargo ship! The ship spotted you and has send a lifeboat to you. You\'re safe.');
+				win()
 			} else if (levelId == 5) {
 				if (random(60) == true) {
 					changeBackground('img/sea.jpg');
 					subtitels('Next day you wake up and you quickly brief the plan with the villager. When the pirates take turns, there is a gape to escape. With your lifeboat sail for exact two hours and wait then for a chopper flying over.');
 					setTimeout(function(){ subtitels('As plan, the pirates take turns, and a gape is created, quickly you jump in you\'r lifeboat and sail for a few hours. And he was right. A chopper was flying over and quickly you fire a flare.') }, 10000)
-					setTimeout(function(){ subtitels('He spotted you and informed the coast guard, minutes later the coast guard arrived and you are safe!') }, 20000)
+					setTimeout(function(){ subtitels('He spotted you and informed the coast guard, minutes later the coast guard arrived and you are safe!'); win(); }, 20000)
 				} else {
 					changeBackground('img/sea.jpg');
 					subtitels('Next day you wake up and you quickly brief the plan with the villager. When the pirates take turns, there is a gape to escape. With your lifeboat sail for a few hours and wait for a chopper flying over.');
@@ -226,7 +240,7 @@
 					changeBackground('img/sea.jpg');
 					subtitels('Next day you prepare you\'r self. You go to the spot and wait.');
 					setTimeout(function(){ subtitels('The pirates take turns, and a gape is created, quickly you jump in you\'r lifeboat and sail for a few hours. And he was right. A chopper was flying over and quickly you fire a flare.') }, 7000)
-					setTimeout(function(){ subtitels('He spotted you and informed the coast guard, minutes later the coast guard arrived and you are safe!') }, 16000)
+					setTimeout(function(){ subtitels('He spotted you and informed the coast guard, minutes later the coast guard arrived and you are safe!'); win(); }, 16000)
 				} else {
 					changeBackground('img/sea.jpg');
 					subtitels('Next day you prepare you\'r self. You go to the spot and wait.');
@@ -238,6 +252,9 @@
 		}
 		function startGame(debug) {
 			if (debug == true) {debugMode = true};
+			if (debugMode == true) {
+				console.log('startGame(): debugMode: ' + debug);
+			}
 			level(0);
 		}</script>
 	<script type="text/javascript">
