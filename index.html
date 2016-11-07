@@ -60,9 +60,7 @@
 			};
 			var para = document.createElement('p');
 			var t = document.createTextNode(text);
-			var att = document.createAttribute('id');
-			att.value = 'subtitels'; 
-			para.setAttributeNode(att); 
+			para.setAttribute('id','subtitels');
 			para.appendChild(t);
 			document.getElementById('container').appendChild(para);
 		}
@@ -90,24 +88,19 @@
 			};
 			var para = document.createElement('ul');
 			var t = document.createTextNode('');
-			var att = document.createAttribute('id');
-			att.value = 'choos'; 
-			para.setAttributeNode(att); 
+			para.setAttribute('id','choos'); 
+
 			para.appendChild(t);
 			document.getElementById('container').appendChild(para);
 
 			var newItem1 = document.createElement('li');
 			var textnode1 = document.createTextNode(option1);
-			var att = document.createAttribute('id');
-			att.value = 'option1'; 
-			newItem1.setAttributeNode(att); 
+			newItem1.setAttribute('id','option1');
 			newItem1.appendChild(textnode1);
 
 			var newItem2 = document.createElement('li');
 			var textnode2 = document.createTextNode(option2);
-			var att = document.createAttribute('id');
-			att.value = 'option2'; 
-			newItem2.setAttributeNode(att); 
+			newItem2.setAttribute('id','option2');
 			newItem2.appendChild(textnode2);
 
 			var list = document.getElementById('choos');
@@ -132,18 +125,14 @@
 
 			var newItem1 = document.createElement('div');
 			var textnode1 = document.createTextNode('Try again?');
-			var att1 = document.createAttribute('id');
-			att1.value = 'start'; 
-			var att2 = document.createAttribute('class');
-			att2.value = 'buttonDead'; 
+			newItem1.setAttribute('id','start'); 
+			newItem1.setAttribute('class','buttonDead');
 
-			newItem1.setAttributeNode(att1); 
-			newItem1.setAttributeNode(att2);
 			newItem1.appendChild(textnode1);
 
 			var list = document.getElementById('container');
 			list.insertBefore(newItem1, list.childNodes[0]);
-			
+
 			document.getElementById("start").onclick = function() {startGame()};
 		}
 	</script>
@@ -291,6 +280,7 @@
 			font-size: 50px;
 			border: 1px;
 			border-style: solid;
+			border-color: #000;
 			padding: 20px 40px;
 			background: rgba(0,0,0,0.1);
 			color: #FFF;
