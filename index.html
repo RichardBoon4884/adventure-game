@@ -119,6 +119,9 @@
 			};
 		}
 		function dead(reason) {
+			if (debugMode == true) {
+				console.log('dead(): ' + reason);
+			}
 			clean();
 			changeBackground('img/game-over.png');
 			subtitels(reason);
@@ -126,7 +129,7 @@
 			var newItem1 = document.createElement('div');
 			var textnode1 = document.createTextNode('Try again?');
 			newItem1.setAttribute('id','start'); 
-			newItem1.setAttribute('class','buttonDead');
+			newItem1.setAttribute('class','buttonTop');
 
 			newItem1.appendChild(textnode1);
 
@@ -138,6 +141,9 @@
 	</script>
 	<script type="text/javascript">
 		function level(levelId) {
+			if (debugMode == true) {
+				console.log('level(): ' + levelId);
+			}
 			clean();
 			if (levelId == 0) {
 				changeBackground('img/plane_crash.jpg');
@@ -271,7 +277,7 @@
 			padding: 20px 40px;
 			background: rgba(0,0,0,0.1);
 		}
-		.buttonDead {
+		.buttonTop {
 			position: absolute;
 			top: 5%;
 			left: 50%;
